@@ -12,8 +12,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {RouterModule} from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { UserComponent } from './user/user.component';
-import {HomeComponent} from './home.component';
-import {routing} from "./app.routing";
+import {routing} from './app.routing';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import {routing} from "./app.routing";
     NavBarComponent,
     ContractListComponent,
     UserComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

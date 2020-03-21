@@ -1,3 +1,31 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.margin-small {
+  margin: 10px;
+}
+
+.margin-left-small {
+  margin-left: 10px;
+}
+
+.margin-right-small {
+  margin-right: 10px;
+}
+
+.margin-medium {
+  margin: 10px;
+}
+
+.margin-left-medium {
+  margin-left: 50px;
+}
+
+.margin-right-medium {
+  margin-right: 50px;
+}
+
+.padding-top-medium {
+  padding-top: 150px;
+}
