@@ -23,7 +23,7 @@
   <button mat-button [matMenuTriggerFor]="menu">Contract</button>
   <mat-menu #menu="matMenu">
     <button [routerLink]="['/contracts']" mat-menu-item>Contracts</button>
-    <button mat-menu-item>Create</button>
+    <button mat-menu-item [routerLink]="['/contracts/create']">Create</button>
   </mat-menu>
   <button mat-button>Users</button>
 

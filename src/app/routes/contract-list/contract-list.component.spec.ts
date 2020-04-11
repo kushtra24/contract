@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ContractListComponent } from './contract-list.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource} from '@angular/material/table';
+
 
 describe('ContractListComponent', () => {
   let component: ContractListComponent;
@@ -8,7 +10,8 @@ describe('ContractListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContractListComponent ]
+      declarations: [ ContractListComponent ],
+      imports: [ MatTableModule, MatTableDataSource ]
     })
     .compileComponents();
   }));

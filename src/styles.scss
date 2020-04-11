@@ -29,3 +29,34 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .padding-top-medium {
   padding-top: 150px;
 }
+
+.center{
+  text-align: center;
+  display: block;
+  position: absolute;
+  right: 50%;
+  top: 50%;
+}
+
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
+.isOriginal-margin-top {
+  margin-top: 17px;
+}
