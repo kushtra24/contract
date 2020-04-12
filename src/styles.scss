@@ -1,3 +1,4 @@
+$fa-font-path : "~@fortawesome/fontawesome-free-webfonts/webfonts";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -44,8 +45,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
-
-
 .example-form {
   min-width: 150px;
   max-width: 500px;
@@ -59,4 +58,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .isOriginal-margin-top {
   margin-top: 17px;
+}
+
+.download-contract {
+  margin-top: 80px;
 }

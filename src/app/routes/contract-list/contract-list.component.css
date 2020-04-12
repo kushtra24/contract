@@ -9,3 +9,7 @@ td, th {
   background-color: rgba(0, 0, 0, .05);
   cursor: pointer;
 }
+
+tr {
+  cursor: pointer;
+}
