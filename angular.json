@@ -62,6 +62,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "de": {
+              "aot": true,
+              "outputPath": "dist/contract-management/",
+              "i18nFile": "src/locale/messages.de.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "de",
+              "i18nMissingTranslation": "error"
             }
           }
         },
@@ -73,6 +81,9 @@
           "configurations": {
             "production": {
               "browserTarget": "contract-management:build:production"
+            },
+            "de": {
+              "browserTarget": "contract-management:build:de"
             }
           }
         },

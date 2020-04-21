@@ -2,6 +2,6 @@
  * the interface for projects
  */
 export interface Project {
-  name?: string;
+  title?: string;
   number?: number;
 }

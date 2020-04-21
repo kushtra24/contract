@@ -19,6 +19,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin: 10px;
 }
 
+.margin-top-medium {
+  margin-top: 10px;
+}
+
 .margin-left-medium {
   margin-left: 50px;
 }
@@ -30,6 +34,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .padding-top-medium {
   padding-top: 150px;
 }
+
 
 .center{
   text-align: center;
@@ -62,4 +67,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .download-contract {
   margin-top: 80px;
+}
+
+.submit-button-mat-spinner {
+  display: inline-block;
+  margin: 0 5px -7px 0;
+  mat-spinner {
+    zoom: 0.2
+  }
+
 }

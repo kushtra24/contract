@@ -28,6 +28,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ContractShowComponent } from './routes/contract-show/contract-show.component';
+import {registerLocaleData} from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import {HttpClientModule} from '@angular/common/http';
+
+registerLocaleData(localeDe, 'de-DE');
 
 @NgModule({
   declarations: [
@@ -63,6 +68,7 @@ import { ContractShowComponent } from './routes/contract-show/contract-show.comp
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
+    HttpClientModule
   ],
   exports: [
     MatAutocompleteModule,

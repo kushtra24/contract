@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="fr" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="contractMenu" datatype="html">
+        <source>Contract</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contractsMenu" datatype="html">
+        <source>Contracts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createMenu" datatype="html">
+        <source>Create</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="userMenu" datatype="html">
+        <source>Users</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="meMenu" datatype="html">
+        <source>Me</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contractList" datatype="html">
+        <source>Contract List</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/contract-list/contract-list.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f6c23aecccbbd25ec0f573d5733b06c343d00fce" datatype="html">
+        <source>Contract management app</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/home/home.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">contractTitle</note>
+      </trans-unit>
+      <trans-unit id="exampleText" datatype="html">
+        <source>This is an example app of an contract management system build with angular</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/home/home.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">exampleText</note>
+      </trans-unit>
+      <trans-unit id="f94d36df661fdd1ad6f3bc598c348bb1c0bb2b46" datatype="html">
+        <source>to navigate to the contract list use the navigation options above</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/home/home.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="description">navigateText</note>
+      </trans-unit>
+      <trans-unit id="createContract" datatype="html">
+        <source>Create Contract</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/create-contract/create-contract.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="typeInput" datatype="html">
+        <source>Type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/create-contract/create-contract.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="isOriginal" datatype="html">
+        <source> is original?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/create-contract/create-contract.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="hasExpirationDate" datatype="html">
+        <source>has expiration date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/create-contract/create-contract.component.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signedDate" datatype="html">
+        <source>Signed Date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/create-contract/create-contract.component.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="endDate" datatype="html">
+        <source>End Date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/create-contract/create-contract.component.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="additionalPeople" datatype="html">
+        <source>Additional people</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/create-contract/create-contract.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="linkedContracts" datatype="html">
+        <source> Linked Contracts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/create-contract/create-contract.component.html</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="73f8489a3ae4d805787b8350d3d91e03e830115b" datatype="html">
+        <source>Choose File</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes/create-contract/create-contract.component.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+        <note priority="1" from="description">ChooseFile</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
