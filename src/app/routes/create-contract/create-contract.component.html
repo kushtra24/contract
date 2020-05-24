@@ -1,0 +1,251 @@
+<!-- isLoading -->
+<div class="center">
+  <mat-progress-spinner class="example-margin"
+                        *ngIf="isLoading"
+                        [color]="color"
+                        [mode]="mode"
+                        [value]="value">
+  </mat-progress-spinner>
+</div>
+
+<div class="container page-header">
+  <h1 i18n="@@createContract">Create Contract</h1>
+</div>
+
+<div class="container" *ngIf="!isLoading">
+  <form #form="ngForm" novalidate="" (submit)="createContract(form, $event)" *ngIf="!isLoading">
+
+    <!-- title-->
+    <div class="col-md-12">
+      <h4 i18n="@@title">Title:
+        <span>{{ title }}</span>
+        <sup *ngIf="!title" class="disabledText">
+          <i class="fas fa-info-circle"></i>
+          Title will be generated while filling the form
+        </sup>
+      </h4>
+    </div>
+
+    <!-- customers-->
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width">
+        <input type="text"
+               placeholder="Customers"
+               i18n-placeholder="customerInput"
+               aria-label="customers"
+               matInput
+               required
+               [name]="'customerId'"
+               (focus)="getCustomers(searchedCustomer)"
+               [ngModel]="customer"
+               (ngModelChange)="customerOnChange($event)"
+               [matAutocomplete]="autoCustomer">
+        <mat-autocomplete #autoCustomer="matAutocomplete" [displayWith]="customerCollectionDisplayFn">
+
+          <mat-option *ngIf="customerloading"><span [ngTemplateOutlet]="loading"></span></mat-option>
+
+          <ng-container *ngIf="!customerloading">
+            <mat-option *ngFor="let customer of customerList" [value]="customer">
+              {{ customer.name }}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <!--type-->
+    <div class="col-md-4">
+      <mat-form-field>
+        <mat-label i18n="@@typeInput">Type</mat-label>
+        <mat-select
+          #contractType="ngModel"
+          required
+          name="'typeId'"
+          [ngModel]="contractInterface"
+          (ngModelChange)="setContractType($event)">
+          <mat-option *ngIf="isLoadingTypes"><span [ngTemplateOutlet]="loading"></span></mat-option>
+          <ng-container *ngIf="!isLoadingTypes">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let item of typeSelected" [value]="item">{{ item.name }}</mat-option>
+          </ng-container>
+        </mat-select>
+        <mat-error *ngIf="contractType.hasError('required')">You must make a selection</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!--    is original chekcbox-->
+    <div class="col-md-2 isOriginal-margin-top">
+      <mat-checkbox [(ngModel)]="contractInterface.isOriginal" name="'isOriginal'" i18n="@@isOriginal"> is original?</mat-checkbox>
+    </div>
+
+    <!--projects-->
+    <div class="col-md-12">
+      <mat-form-field [floatLabel]="projectLoading ? 'never' : 'auto'">
+          <mat-label *ngIf="projectLoading">
+              <div class="select-placeholder-container">
+                <span>Loading...</span>
+                <mat-spinner class="spinner" diameter="20"></mat-spinner>
+              </div>
+          </mat-label>
+
+        <mat-select multiple
+                    placeholder="Projects"
+                    i18n-placeholder="@@projectsInput"
+                    (openedChange)="getProjects()"
+                    [(ngModel)]="projectIds"
+                    name="projectId"
+                    [panelClass]="projectLoading || !projectListIsOpen ? 'hide-option' : ''">
+
+          <mat-option *ngIf="projectList == null || !projectList.length" disabled></mat-option>
+          <mat-option *ngFor="let project of projectList" [value]="project"> {{ project.title }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <!-- expiration date checkbox-->
+    <div class="col-md-12">
+      <mat-checkbox [(ngModel)]="contractInterface.temporary" name="temporary" i18n="@@hasExpirationDate">has expiration date
+      </mat-checkbox>
+    </div>
+
+    <!--signed data-->
+    <div class="col-md-4">
+      <mat-form-field>
+        <mat-label i18n="@@signedDate">Signed Date</mat-label>
+        <input matInput required name="'signedDate'" [(ngModel)]="contractInterface.signedDate" [matDatepicker]="picker" [max]="maxDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <!--End data-->
+    <div class="col-md-4" *ngIf="contractInterface.temporary">
+      <mat-form-field>
+        <mat-label i18n="@@endDate">End Date</mat-label>
+        <input matInput name="endDate" [(ngModel)]="contractInterface.endDate" [matDatepicker]="picker" [min]="minDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <!-- Additional People-->
+    <div class="col-md-12">
+      <mat-form-field [floatLabel]="peopleLoading ? 'never' : 'auto'">
+        <mat-label *ngIf="peopleLoading">
+          <div class="select-placeholder-container">
+            <span>Loading...</span>
+            <mat-spinner class="spinner" diameter="20"></mat-spinner>
+          </div>
+        </mat-label>
+
+        <mat-select multiple
+                    placeholder="Additional people"
+                    i18n-placeholder="@@additionalPeople"
+                    [(ngModel)]="personId"
+                    name="personId"
+                    (openedChange)="getAdditionalPeople($event)"
+                    [panelClass]="peopleLoading || !isOpen ? 'hide-option' : ''">
+            <mat-option *ngIf="additionalPeopleList === null || !additionalPeopleList.length" disabled></mat-option>
+            <mat-option *ngFor="let additionalPeople of additionalPeopleList" [value]="additionalPeople">
+              {{additionalPeople.firstName}} {{additionalPeople.lastName}}
+            </mat-option>
+        </mat-select>
+
+      </mat-form-field>
+    </div>
+
+    <!--  Linked Contracts -->
+    <div class="col-md-12">
+      <mat-form-field [floatLabel]="linkedLoading ? 'never' : 'auto'">
+
+        <mat-label *ngIf="linkedLoading">
+          <div class="select-placeholder-container">
+            <span>Loading...</span>
+            <mat-spinner class="spinner" diameter="20"></mat-spinner>
+          </div>
+        </mat-label>
+
+        <mat-select multiple
+                    placeholder=" Linked Contracts"
+                    i18n-placeholder="@@linkedContracts"
+                    (openedChange)="getContracts()"
+                    [(ngModel)]="linkedContracts"
+                    name="linkedContracts"
+                    [panelClass]="linkedLoading || !linkedIsOpen ? 'hide-option' : ''">
+
+          <mat-option *ngIf="linkedList === null || !linkedList.length" disabled></mat-option>
+          <mat-option *ngFor="let linked of linkedList" [value]="linked">{{linked.title}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-12">
+
+      <!-- Drop zone -->
+      <div ng2FileDrop
+           [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+           (fileOver)="fileOverBase($event)"
+           [uploader]="uploader"
+           class="well my-drop-zone col-md-10"
+           i18n="@@baseDropZone">
+        Base drop zone
+      </div>
+
+      <!-- Single -->
+      <div class="col-md-2 padding-right-none">
+        <label for="file" class="btn btn-default display-block" i18n="@chooseFile">Choose File</label>
+        <input id="file" class="hidden" type="file" ng2FileSelect [uploader]="uploader" [accept]="['.pdf']" />
+      </div>
+    </div>
+
+
+    <!-- upload queue -->
+    <div class="col-md-12">
+<!--      <p>Queue length: {{ uploader?.queue?.length }}</p>-->
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th width="50%">Name</th>
+          <th>Size</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of uploader.queue">
+          <td><strong>{{ item?.file?.name }}</strong></td>
+          <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+          <td class="text-center">
+            <span *ngIf="isUploading">
+                <mat-spinner class="spinner" diameter="20"></mat-spinner>
+            </span>
+            <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+          </td>
+          <td nowrap>
+            <button type="button" class="btn btn-danger btn-xs"
+                    (click)="item.remove()">
+              <span class="glyphicon glyphicon-trash"></span> Remove
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- submit -->
+    <div class="col-md-12">
+      <div class="pull-right margin-top-medium">
+        <ng-container *ngIf="submitLoading" [ngTemplateOutlet]="loading"></ng-container>
+        <button mat-flat-button color="primary" i18n="@@submitButton" class="submit-button">Submit</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<ng-template #loading>
+  <div class="submit-button-mat-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

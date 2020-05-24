@@ -28,6 +28,16 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ContractShowComponent } from './routes/contract-show/contract-show.component';
+import {registerLocaleData} from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import {HttpClientModule} from '@angular/common/http';
+import {RegisterComponent} from './components/register/register.component';
+import {FileUploadModule} from 'ng2-file-upload';
+import { LoginComponent } from './routes/login/login.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
+registerLocaleData(localeDe, 'de-DE');
 
 @NgModule({
   declarations: [
@@ -38,32 +48,38 @@ import { ContractShowComponent } from './routes/contract-show/contract-show.comp
     HomeComponent,
     CreateContractComponent,
     ContractShowComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    RouterModule,
-    MatToolbarModule,
-    routing,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatOptionModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatAutocompleteModule,
-    CdkTableModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        RouterModule,
+        MatToolbarModule,
+        routing,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatOptionModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatAutocompleteModule,
+        CdkTableModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        HttpClientModule,
+        FileUploadModule,
+        MatCardModule,
+        MatSnackBarModule,
+    ],
   exports: [
     MatAutocompleteModule,
     MatDatepickerModule,

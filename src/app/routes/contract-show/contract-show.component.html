@@ -1,0 +1,79 @@
+<!-- isLoading -->
+<div class="center">
+  <mat-progress-spinner class="example-margin"
+                        *ngIf="isLoading"
+                        [color]="color"
+                        [mode]="mode"
+                        [value]="value">
+  </mat-progress-spinner>
+</div>
+
+<div class="container" *ngIf="!isLoading">
+  <div class="card">
+    <div class="page-header">
+      <h1>Contract Details
+        <button class="pull-right" mat-raised-button color="basic" aria-label="download contract" (click)="navigateToRoute(contract.id)">
+        Edit
+          <i class="fas fa-edit"></i>
+        </button>
+      </h1>
+    </div>
+    <div class="card-body">
+      <div class="row">
+
+        <div class="col-md-9">
+          <p><b>Name: </b> {{ contract.title }}</p>
+          <br>
+          <p><b>Number: </b> {{ contract.id}}</p>
+          <br>
+          <p><b>Type: </b> {{ contract.contractType }}</p>
+          <br>
+          <p><b>Date:</b> {{ contract.signedDareConverted }} - {{ contract.endDateConvert }}</p>
+          <br>
+          <p><b>Customer:</b> {{contract.customerName }}</p>
+          <br>
+          <p><b>Original: </b> {{ contract.isOriginal ? 'Yes' : 'No' }}</p>
+
+        </div>
+
+        <div class="col-md-3">
+            <div class="download-contract">
+              <i class="fas fa-file-alt fa-7x"></i>
+              <br>
+              <br>
+              <p><b>File Name: </b> {{ fileDetails.filename }}</p>
+              <a mat-raised-button color="primary" aria-label="download contract" target="_blank"
+                 [href]=" env + 'api/files/' + contract?.id + '/download?token=' + userToken ">
+                Download
+                <i class="fas fa-file-download"></i>
+              </a>
+            </div>
+        </div>
+
+        <div class="col-md-12 padding-top-small">
+          <div class="row">
+            <div class="col-md-4">
+              <p><b>Projects:</b></p>
+              <span *ngFor="let project of contract.projects">
+            <p>{{ project.title }}</p>
+          </span>
+            </div>
+            <div class="col-md-4">
+              <p><b>Linked Contracts:</b></p>
+              <span *ngFor="let linked of contract.linkedContracts">
+            <p> {{ linked.title }}</p>
+          </span>
+            </div>
+            <div class="col-md-4">
+              <p><b>Additional People:</b></p>
+              <span *ngFor="let person of contract.people">
+            <p> {{ person.firstName }} {{ person.lastName }}</p>
+          </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

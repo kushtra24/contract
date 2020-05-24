@@ -1,0 +1,17 @@
+.center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+}
+
+.Align-everything-left {
+  flex: 1 1 auto;
+}
+
+.user-icon:hover {
+  cursor: pointer;
+}

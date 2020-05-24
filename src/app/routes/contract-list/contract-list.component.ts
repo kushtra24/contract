@@ -6,24 +6,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {Contract} from '../../interfaces/contract';
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
-
-/** Constants used to fill up our data base. */
-const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
+import {ContractService} from '../../services/contract/contract.service';
 
 @Component({
   selector: 'app-contract-list',
@@ -33,9 +16,9 @@ const NAMES: string[] = [
 
 export class ContractListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
+  displayedColumns: string[] = ['id', 'title', 'endDate', 'customerId'];
 
-  dataSource: MatTableDataSource<UserData>;
+  dataSource: MatTableDataSource<Contract>;
 
   contract: Contract;
   isLoading: boolean;
@@ -50,24 +33,27 @@ export class ContractListComponent implements OnInit {
   mode: ProgressSpinnerMode = 'indeterminate';
   value = 50;
 
+  contractList: Contract[];
+
   /**
    * the constructor
    */
-  constructor(protected router: Router) {
+  constructor(protected router: Router,
+              private contractService: ContractService) {
     this.reset();
-    // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
   }
 
   /**
    * ng on init
    */
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
+    // if the contract list is empty then do not paginate
+    if (this.contractList.length) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+
   }
 
 
@@ -76,11 +62,32 @@ export class ContractListComponent implements OnInit {
    */
   reset() {
     this.contract = {};
+    this.contractList = [];
     this.isLoading = false;
     // contract details page
     this.contractDetailBaseLink = '/contract/';
+    this.subscribeToEvents();
   }
 
+  private subscribeToEvents() {
+
+    this.isLoading = true;
+    this.contractService.getContracts()
+      .subscribe( (result: Contract[]) => {
+        this.isLoading = false;
+        this.contractList = result;
+        console.log('result', this.contractList);
+
+        // Create 100 contractItems
+        const contractItems = this.contractList;
+        // Assign the data to the data source for the table to render
+        this.dataSource = new MatTableDataSource(contractItems);
+        // Assign the paginator *after* dataSource is set
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+
+  }
 
   /**
    * apply fillter
@@ -92,6 +99,7 @@ export class ContractListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+
   }
 
   /**
@@ -100,26 +108,9 @@ export class ContractListComponent implements OnInit {
   onContractShow(contractId: number) {
     console.log('id', contractId);
     // TODO: undo this comment
-    // if (!contractId || !this.router) { return; }
+    if (!contractId || !this.router) { return; }
     this.router.navigate([this.contractDetailBaseLink + contractId]);
   }
-
-
-
-}
-
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
 
 }
 

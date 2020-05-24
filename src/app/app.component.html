@@ -12,27 +12,9 @@
   </div>
 </div>
 
-<!--<div class="section" *ngIf="!isLoading">-->
-<!--  <app-nav-bar></app-nav-bar>-->
-<!--</div>-->
-
-<mat-toolbar>
-  <span class="margin-right-medium">Contract Management</span>
-
-  <button mat-button [routerLink]="['/']"><mat-icon>house</mat-icon></button>
-  <button mat-button [matMenuTriggerFor]="menu">Contract</button>
-  <mat-menu #menu="matMenu">
-    <button [routerLink]="['/contracts']" mat-menu-item>Contracts</button>
-    <button mat-menu-item [routerLink]="['/contracts/create']">Create</button>
-  </mat-menu>
-  <button mat-button>Users</button>
-
-  <span class="Align-everything-left"></span>
-  <mat-icon class="user-icon" aria-hidden="false" aria-label="User icon" mat-button [matMenuTriggerFor]="userMenu">face</mat-icon>
-  <mat-menu #userMenu="matMenu">
-    <button mat-menu-item [routerLink]="['/user']">Me</button>
-  </mat-menu>
-</mat-toolbar>
+<div class="section" *ngIf="!isLoading">
+  <app-nav-bar></app-nav-bar>
+</div>
 
 <!-- page content -->
 <router-outlet></router-outlet>
