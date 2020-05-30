@@ -5,6 +5,11 @@
 export const environment = {
   production: false,
   api: 'http://localhost:3000/'
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 4348fe969dc5d14656fdd6aadf76522d855e84f2
 };
 
 /*

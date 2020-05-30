@@ -31,11 +31,14 @@ import { ContractShowComponent } from './routes/contract-show/contract-show.comp
 import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import {HttpClientModule} from '@angular/common/http';
+<<<<<<< HEAD
 import {RegisterComponent} from './components/register/register.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import { LoginComponent } from './routes/login/login.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+=======
+>>>>>>> 4348fe969dc5d14656fdd6aadf76522d855e84f2
 
 registerLocaleData(localeDe, 'de-DE');
 
@@ -51,6 +54,7 @@ registerLocaleData(localeDe, 'de-DE');
     RegisterComponent,
     LoginComponent,
   ],
+<<<<<<< HEAD
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -80,6 +84,34 @@ registerLocaleData(localeDe, 'de-DE');
         MatCardModule,
         MatSnackBarModule,
     ],
+=======
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    RouterModule,
+    MatToolbarModule,
+    routing,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatOptionModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatAutocompleteModule,
+    CdkTableModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    HttpClientModule
+  ],
+>>>>>>> 4348fe969dc5d14656fdd6aadf76522d855e84f2
   exports: [
     MatAutocompleteModule,
     MatDatepickerModule,
