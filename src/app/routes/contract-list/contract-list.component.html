@@ -20,7 +20,7 @@
   </mat-form-field>
 
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
 
       <!-- ID Column -->
       <ng-container matColumnDef="id">

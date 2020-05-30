@@ -27,7 +27,7 @@ import {File} from '../../interfaces/file';
 })
 export class CreateContractComponent implements OnInit {
 
-  contractInterface: Contract;
+  contract: Contract;
   @Input() form: NgForm;
 
   @ViewChild('typeInput', {static: true})
@@ -44,7 +44,8 @@ export class CreateContractComponent implements OnInit {
 
 
   // type
-  typeSelected: ContractType[];
+  contractTypeList: ContractType[];
+  typesVal: ContractType;
   isLoadingTypes: boolean;
 
   submitted: boolean;
@@ -58,24 +59,24 @@ export class CreateContractComponent implements OnInit {
 
   // project
   projectList: Project[];
-  projectIds: Project[];
+  projectIds: number[];
   projectLoading: boolean;
   projectListIsOpen: boolean;
 
   // additional people
   additionalPeopleList: Person[];
-  personId: Person[];
+  personId: number[];
   peopleLoading: boolean;
   isOpen: boolean;
 
   // linked
   linkedList: Contract[];
-  linkedContracts: Contract[];
+  linkedContracts: number[];
   linkedLoading: boolean;
   linkedIsOpen: boolean;
 
   // upload
-  fileToUpload: File;
+  fileData: File;
   isUploading: boolean;
   uploader: FileUploader;
   hasBaseDropZoneOver: boolean;
@@ -84,6 +85,7 @@ export class CreateContractComponent implements OnInit {
 
   // edit
   isEditMode: boolean;
+  filename: string;
 
 
   /**
@@ -113,22 +115,33 @@ export class CreateContractComponent implements OnInit {
   private reset() {
     this.customer = {};
 
-    this.contractInterface = {
+    this.contract = {
       isOriginal: false,
       temporary: false,
       projectId: [],
       personId: [],
-      linkedContractsId: []
+      linkedContractsId: [],
+      customerName: null
     };
+
+    this.typesVal = {};
+
+    this.projectIds = [];
+    this.personId = [];
+    this.linkedContracts = [];
 
     // title
     this.title = '';
+    // contract type
+    this.type = {};
+    // file name
+    this.filename = 'NO-File';
     // page loading
     this.isLoading = false;
     // loading on submit
     this.submitLoading = false;
     // selected contract type
-    this.typeSelected = null;
+    this.contractTypeList = null;
     // loading on getting customers form selection
     this.customerloading = false;
     // loading on getting projects list on selection
@@ -148,7 +161,7 @@ export class CreateContractComponent implements OnInit {
     // project searching subject
     this.projectSearchSubject = new Subject<any>();
     // file upload
-    this.fileToUpload = null;
+    this.fileData = null;
     const options = {};
     this.uploader = new FileUploader(options);
     this.hasBaseDropZoneOver = false;
@@ -199,12 +212,14 @@ export class CreateContractComponent implements OnInit {
 
     // check if is in edit mode or not
     this.route.params.subscribe(params => {
-      this.contractInterface.id = +params.id;
-      this.getContractDetails(this.contractInterface.id);
-      this.getFileDetails(this.contractInterface.id);
+      this.contract.id = +params.id;
+      this.getContractDetails(this.contract.id);
+      this.getFileDetails(this.contract.id);
     }, err => {
       this.isLoading = false;
+      throw err;
     });
+
   }
 
   /**
@@ -214,7 +229,7 @@ export class CreateContractComponent implements OnInit {
     this.isLoadingTypes = true;
     this.contractTypesService.loadTypes()
       .subscribe((data: ContractType[]) => {
-        this.typeSelected = data;
+        this.contractTypeList = data;
         this.isLoadingTypes = false;
       });
   }
@@ -256,8 +271,8 @@ export class CreateContractComponent implements OnInit {
 
     this.contractService.loadProjects()
       .subscribe((projectResult: Project[]) => {
-        this.projectList = projectResult;
         this.projectLoading = false;
+        this.projectList = projectResult;
       }, err => {
         this.projectLoading = false;
         throw err;
@@ -275,8 +290,8 @@ export class CreateContractComponent implements OnInit {
 
     this.contractService.getContracts()
       .subscribe((rez: Contract[]) => {
-        this.linkedList = rez;
         this.linkedLoading = false;
+        this.linkedList = rez;
       }, error => {
         this.linkedLoading = false;
         throw error;
@@ -288,30 +303,33 @@ export class CreateContractComponent implements OnInit {
    * @param value search string
    */
   customerOnChange(value) {
-    if (!value) {
-      return;
-    }
+    if (!value) { return; }
     this.searchedCustomer = value;
     this.customer = value;
-    this.contractInterface.customerId = value.id;
+    this.contract.customerId = value.id;
     // loading to on
     this.customerloading = true;
     // autocomplete search
     this.customerSearchSubject.next(value);
     // creat the contract title
-    this.createTitle();
+    this.generateTitle();
   }
 
   /**
-   * create the contract title
+   * generate the contract title
    */
-  createTitle() {
-    if (this.customer.name && this.type?.name) {
-      this.title = this.customer.name + '-' + this.type?.name;
-    } else {
-      console.log('no title for you this time');
+  generateTitle() {
+    console.log('customer name ->', this.customer.name);
+
+    // get all files in queue
+    for (const item of this.uploader.queue) {
+      this.filename = item?.file?.name;
     }
-    this.contractInterface.title = this.title;
+
+    if (this.customer.name && this.type.name) {
+      this.title = this.customer.name + '-' + this.type.name + '-' + this.filename;
+    }
+    this.contract.title = this.title;
   }
 
 
@@ -319,7 +337,7 @@ export class CreateContractComponent implements OnInit {
    * get name of
    * @param customer object
    */
-  customerCollectionDisplayFn(customer) {
+  customerCollectionDisplayFn(customer?) {
     return customer?.name;
   }
 
@@ -332,45 +350,45 @@ export class CreateContractComponent implements OnInit {
 
     this.submitted = true;
 
-    // project filling
-    if (this.projectIds != null) {
-      for (const project of this.projectIds) {
-        this.contractInterface.projectId.push(project.id);
-      }
+    this.contract.projectId = this.projectIds;
+    this.contract.personId = this.personId;
+    this.contract.linkedContractsId = this.linkedContracts;
+
+    if (this.contract.temporary === false) {
+      const newSignedDate = new Date(this.contract.signedDate);
+      this.contract.endDate = new Date(newSignedDate.setFullYear(newSignedDate.getFullYear() + 10)).toString();
     }
 
-    // additional people filling
-    if (this.personId != null) {
-      for (const additionalPerson of this.personId) {
-        this.contractInterface.personId.push(additionalPerson.id);
-      }
+    if (!this.isEditMode) {
+      // create contract
+      this.contractService.createContract(this.contract)
+        .subscribe((contract: Contract) => {
+          if (contract && contract.id && this.uploader.queue.length) {
+            this.uploadFiles(contract.id);
+          } else {
+            this.router.navigate(['contracts/']);
+          }
+          // this.router.navigate(['contracts/']);
+        }, err => {
+          this.submitted = false;
+          throw err;
+        });
+    } else {
+        // update contract
+        this.contractService.updateContract(this.contract)
+          .subscribe( (data: Contract) => {
+              if (data && data.id && this.uploader.queue.length) {
+                this.uploadFiles(data.id);
+              } else {
+                this.router.navigate(['contracts/']);
+              }
+          }, err => {
+            this.submitted = false;
+            throw err;
+          });
+
     }
 
-    // linked contract filling
-    if (this.linkedContracts != null) {
-      for (const linkedContract of this.linkedContracts) {
-        this.contractInterface.linkedContractsId.push(linkedContract.id);
-      }
-    }
-
-    if (this.contractInterface.temporary === false) {
-      const newSignedDate = new Date(this.contractInterface.signedDate);
-      this.contractInterface.endDate = new Date(newSignedDate.setFullYear(newSignedDate.getFullYear() + 10)).toString();
-    }
-
-    // create contract
-    this.contractService.createContract(this.contractInterface)
-      .subscribe((contract: Contract) => {
-        if (contract && contract.id) {
-          this.uploadFiles(contract.id);
-        } else {
-          this.router.navigate(['contracts/']);
-        }
-        // this.router.navigate(['contracts/']);
-      }, error => {
-        this.submitted = false;
-        throw error;
-      });
   }
 
   /**
@@ -424,7 +442,7 @@ export class CreateContractComponent implements OnInit {
    * get all additional people
    * @param event sent from form
    */
-  getAdditionalPeople(event) {
+  getAdditionalPeople(event?) {
     this.isOpen = event;
     this.peopleLoading = true;
     this.contractService.getPeople()
@@ -444,8 +462,10 @@ export class CreateContractComponent implements OnInit {
    */
   setContractType(value: any) {
     this.type = value;
-    this.contractInterface.typeId = value.id;
-    this.createTitle();
+    this.contract.typeId = value.id;
+    console.log('contract type ', this.contract.typeId);
+    console.log('contract type value -> ', value);
+    this.generateTitle();
   }
 
   /**
@@ -460,7 +480,43 @@ export class CreateContractComponent implements OnInit {
       .subscribe( (rez: Contract) => {
         this.isLoading = false;
         this.isEditMode = true;
-        this.contractInterface = rez;
+        // full the contact interface
+        this.contract = rez;
+
+        console.log('contract -> ', this.contract);
+        // add value to customer input
+        this.title = rez.title;
+        this.customer.name = rez.customerName;
+
+
+        // contract type value input
+        this.typesVal = this.contractTypeList.find(x => x.id === rez.typeId);
+        // this.peopleName = this.contractInterface.projects['title'];
+
+        // project filling the input form with data
+        this.getProjects();
+        if (this.contract.projects != null) {
+          for (const project of this.contract.projects) {
+            this.projectIds.push(project.id);
+          }
+        }
+
+        // additional people filling the input with data
+        this.getAdditionalPeople();
+        if (this.contract.people != null) {
+          for (const people of this.contract.people) {
+            this.personId.push(people.id);
+            this.contract.personId = people;
+          }
+        }
+
+        // linked contract filling the input with data
+        this.getContracts();
+        if (this.contract.linkedContracts != null) {
+          for (const contract of this.contract.linkedContracts) {
+            this.linkedContracts.push(contract.id);
+          }
+        }
       }, err => {
         this.isLoading = false;
         throw err;
@@ -478,7 +534,8 @@ export class CreateContractComponent implements OnInit {
     this.fileService.getDetails(id)
       .subscribe( (date: File) => {
         this.isLoading = false;
-        this.fileToUpload = date;
+        this.fileData = date;
+        console.log('file data -> ', this.fileData);
       }, err => {
         this.isLoading = false;
       });

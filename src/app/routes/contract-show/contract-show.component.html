@@ -21,32 +21,39 @@
     <div class="card-body">
       <div class="row">
 
-        <div class="col-md-9">
-          <p><b>Name: </b> {{ contract.title }}</p>
+        <div class="col-md-8">
+          <p><b>Name: </b> {{ contract?.title }}</p>
           <br>
-          <p><b>Number: </b> {{ contract.id}}</p>
+          <p><b>Number: </b> {{ contract?.id}}</p>
           <br>
-          <p><b>Type: </b> {{ contract.contractType }}</p>
+          <p><b>Type: </b> {{ contract?.contractType }}</p>
           <br>
-          <p><b>Date:</b> {{ contract.signedDareConverted }} - {{ contract.endDateConvert }}</p>
+          <p><b>Date:</b> {{ contract?.signedDareConverted }} - {{ contract?.endDateConvert }}</p>
           <br>
-          <p><b>Customer:</b> {{contract.customerName }}</p>
+          <p><b>Customer:</b> {{contract?.customerName }}</p>
           <br>
-          <p><b>Original: </b> {{ contract.isOriginal ? 'Yes' : 'No' }}</p>
+          <p><b>Original: </b> {{ contract?.isOriginal ? 'Yes' : 'No' }}</p>
 
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="download-contract">
-              <i class="fas fa-file-alt fa-7x"></i>
-              <br>
-              <br>
-              <p><b>File Name: </b> {{ fileDetails.filename }}</p>
+
+              <div class="col-md-4">
+                <i class="fas fa-file-alt fa-7x"></i>
+              </div>
+              <div class="col-md-7">
+                <p><b>File Name: </b> {{ fileDetails?.filename }}</p>
+                <p><b>File Size: </b> {{ fileDetails?.size/1024/1024 | number:'.2' }} MB</p>
+                <p><b>File Type: </b> {{ fileDetails?.mime }}</p>
+              </div>
+
               <a mat-raised-button color="primary" aria-label="download contract" target="_blank"
                  [href]=" env + 'api/files/' + contract?.id + '/download?token=' + userToken ">
                 Download
                 <i class="fas fa-file-download"></i>
               </a>
+
             </div>
         </div>
 

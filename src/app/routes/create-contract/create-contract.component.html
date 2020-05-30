@@ -9,7 +9,7 @@
 </div>
 
 <div class="container page-header">
-  <h1 i18n="@@createContract">Create Contract</h1>
+  <h1 *ngIf="contract.id; else create" i18n="@@createContract">Edit Contract</h1>
 </div>
 
 <div class="container" *ngIf="!isLoading">
@@ -40,6 +40,7 @@
                [ngModel]="customer"
                (ngModelChange)="customerOnChange($event)"
                [matAutocomplete]="autoCustomer">
+
         <mat-autocomplete #autoCustomer="matAutocomplete" [displayWith]="customerCollectionDisplayFn">
 
           <mat-option *ngIf="customerloading"><span [ngTemplateOutlet]="loading"></span></mat-option>
@@ -58,24 +59,25 @@
       <mat-form-field>
         <mat-label i18n="@@typeInput">Type</mat-label>
         <mat-select
-          #contractType="ngModel"
+          #cType="ngModel"
           required
-          name="'typeId'"
-          [ngModel]="contractInterface"
-          (ngModelChange)="setContractType($event)">
+          name="typeId"
+          [ngModel]="typesVal"
+          (ngModelChange)="setContractType($event)"
+          #item="ngModel">
           <mat-option *ngIf="isLoadingTypes"><span [ngTemplateOutlet]="loading"></span></mat-option>
           <ng-container *ngIf="!isLoadingTypes">
             <mat-option>None</mat-option>
-            <mat-option *ngFor="let item of typeSelected" [value]="item">{{ item.name }}</mat-option>
+            <mat-option *ngFor="let item of contractTypeList" [value]="item">{{ item.name }}</mat-option>
           </ng-container>
         </mat-select>
-        <mat-error *ngIf="contractType.hasError('required')">You must make a selection</mat-error>
+        <mat-error *ngIf="cType.hasError('required')">You must make a selection</mat-error>
       </mat-form-field>
     </div>
 
-    <!--    is original chekcbox-->
+    <!--is original checkbox-->
     <div class="col-md-2 isOriginal-margin-top">
-      <mat-checkbox [(ngModel)]="contractInterface.isOriginal" name="'isOriginal'" i18n="@@isOriginal"> is original?</mat-checkbox>
+      <mat-checkbox [(ngModel)]="contract.isOriginal" name="isOriginal" i18n="@@isOriginal"> is original?</mat-checkbox>
     </div>
 
     <!--projects-->
@@ -88,7 +90,8 @@
               </div>
           </mat-label>
 
-        <mat-select multiple
+        <mat-select
+                    multiple
                     placeholder="Projects"
                     i18n-placeholder="@@projectsInput"
                     (openedChange)="getProjects()"
@@ -97,14 +100,15 @@
                     [panelClass]="projectLoading || !projectListIsOpen ? 'hide-option' : ''">
 
           <mat-option *ngIf="projectList == null || !projectList.length" disabled></mat-option>
-          <mat-option *ngFor="let project of projectList" [value]="project"> {{ project.title }}</mat-option>
+          <mat-option *ngFor="let project of projectList" [value]="project.id"> {{ project.title }}</mat-option>
         </mat-select>
+
       </mat-form-field>
     </div>
-    
+
     <!-- expiration date checkbox-->
     <div class="col-md-12">
-      <mat-checkbox [(ngModel)]="contractInterface.temporary" name="temporary" i18n="@@hasExpirationDate">has expiration date
+      <mat-checkbox [(ngModel)]="contract.temporary" name="temporary" i18n="@@hasExpirationDate">has expiration date
       </mat-checkbox>
     </div>
 
@@ -112,17 +116,17 @@
     <div class="col-md-4">
       <mat-form-field>
         <mat-label i18n="@@signedDate">Signed Date</mat-label>
-        <input matInput required name="'signedDate'" [(ngModel)]="contractInterface.signedDate" [matDatepicker]="picker" [max]="maxDate">
+        <input matInput required name="'signedDate'" [(ngModel)]="contract.signedDate" [matDatepicker]="picker" [max]="maxDate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </div>
 
     <!--End data-->
-    <div class="col-md-4" *ngIf="contractInterface.temporary">
+    <div class="col-md-4" *ngIf="contract.temporary">
       <mat-form-field>
         <mat-label i18n="@@endDate">End Date</mat-label>
-        <input matInput name="endDate" [(ngModel)]="contractInterface.endDate" [matDatepicker]="picker" [min]="minDate">
+        <input matInput name="endDate" [(ngModel)]="contract.endDate" [matDatepicker]="picker" [min]="minDate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -146,7 +150,7 @@
                     (openedChange)="getAdditionalPeople($event)"
                     [panelClass]="peopleLoading || !isOpen ? 'hide-option' : ''">
             <mat-option *ngIf="additionalPeopleList === null || !additionalPeopleList.length" disabled></mat-option>
-            <mat-option *ngFor="let additionalPeople of additionalPeopleList" [value]="additionalPeople">
+            <mat-option *ngFor="let additionalPeople of additionalPeopleList" [value]="additionalPeople.id">
               {{additionalPeople.firstName}} {{additionalPeople.lastName}}
             </mat-option>
         </mat-select>
@@ -174,7 +178,7 @@
                     [panelClass]="linkedLoading || !linkedIsOpen ? 'hide-option' : ''">
 
           <mat-option *ngIf="linkedList === null || !linkedList.length" disabled></mat-option>
-          <mat-option *ngFor="let linked of linkedList" [value]="linked">{{linked.title}}</mat-option>
+          <mat-option *ngFor="let linked of linkedList" [value]="linked.id">{{linked.title}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -194,7 +198,7 @@
       <!-- Single -->
       <div class="col-md-2 padding-right-none">
         <label for="file" class="btn btn-default display-block" i18n="@chooseFile">Choose File</label>
-        <input id="file" class="hidden" type="file" ng2FileSelect [uploader]="uploader" [accept]="['.pdf']" />
+        <input id="file" class="hidden" type="file" ng2FileSelect (onFileSelected)="generateTitle()" [uploader]="uploader" [accept]="['.pdf']" />
       </div>
     </div>
 
@@ -210,9 +214,19 @@
           <th>Size</th>
           <th>Status</th>
           <th>Actions</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
+        <tr *ngIf="fileData?.filename && !uploader.queue.length">
+          <td><strong>{{ fileData.filename }}</strong></td>
+          <td *ngIf="uploader.options.isHTML5" nowrap>{{ fileData.size/1024/1024 | number:'.2' }} MB</td>
+          <td class="text-center">
+            <span><i class="glyphicon glyphicon-ok pull-left"></i></span>
+          </td>
+          <td nowrap>
+          </td>
+        </tr>
         <tr *ngFor="let item of uploader.queue">
           <td><strong>{{ item?.file?.name }}</strong></td>
           <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
@@ -243,6 +257,10 @@
 
   </form>
 </div>
+
+<ng-template #create>
+  <h1 i18n="@@createContract">Create Contract</h1>
+</ng-template>
 
 <ng-template #loading>
   <div class="submit-button-mat-spinner">

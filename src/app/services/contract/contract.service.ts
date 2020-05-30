@@ -7,7 +7,6 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Project} from '../../interfaces/project';
 import {Person} from '../../interfaces/Person';
-import {format} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -124,11 +123,7 @@ export class ContractService {
 
       if (!contract || contract === {} ) { return observer.error(); }
 
-      const signedDate = new Date(contract.signedDate);
-      contract.signedDate = signedDate.getFullYear() + '-' + (signedDate.getMonth() + 1) + '-' + signedDate.getDate();
-
-      const endDate = new Date(contract.endDate);
-      contract.endDate = endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate();
+      this.convertDates(contract);
 
 
       return this.http.post(this.env + 'api/contracts', contract)
@@ -139,6 +134,41 @@ export class ContractService {
         });
     });
   }
+
+
+  /**
+   * update a contract
+   * @param contract id
+   */
+  updateContract(contract: Contract) {
+    return new Observable( observer => {
+
+      if (!contract || contract === {}) { return observer.error(); }
+
+      this.convertDates(contract);
+
+      return this.http.put(this.env + 'api/contracts/' + contract.id, contract)
+        .subscribe( (data: Contract) => {
+          return observer.next(data);
+        }, err => {
+          return observer.error(err);
+        });
+    });
+  }
+
+  /**
+   * convert signDate and endDate
+   * @param contract interface
+   */
+  convertDates(contract) {
+
+    const signedDate = new Date(contract.signedDate);
+    contract.signedDate = signedDate.getFullYear() + '-' + (signedDate.getMonth() + 1) + '-' + signedDate.getDate();
+
+    const endDate = new Date(contract.endDate);
+    contract.endDate = endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate();
+  }
+
 
   /**
    * get the details of contract
@@ -154,10 +184,5 @@ export class ContractService {
             });
     }).pipe(first());
   }
-
-
-  // getContractDetails(id) {
-  //
-  // }
 
 }
