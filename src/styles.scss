@@ -35,13 +35,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding-top: 150px;
 }
 
-<<<<<<< HEAD
 .padding-top-small {
   padding-top: 50px;
 }
-
-=======
->>>>>>> 4348fe969dc5d14656fdd6aadf76522d855e84f2
 
 .center{
   text-align: center;
@@ -82,7 +78,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   mat-spinner {
     zoom: 0.2
   }
-<<<<<<< HEAD
+
 }
 
 .select-placeholder-container {
@@ -106,7 +102,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 .disabledText {
   color: #ccc;
-=======
+}
 
->>>>>>> 4348fe969dc5d14656fdd6aadf76522d855e84f2
+.image-align-center {
+  display:block;
+  margin:auto;
 }

@@ -1,7 +1,7 @@
 <!-- isLoading -->
 <div class="center">
   <mat-progress-spinner class="example-margin"
-                        *ngIf="isLoading"
+                        *ngIf="isLoading || submitted"
                         [color]="color"
                         [mode]="mode"
                         [value]="value">
@@ -13,7 +13,7 @@
 </div>
 
 <div class="container" *ngIf="!isLoading">
-  <form #form="ngForm" novalidate="" (submit)="createContract(form, $event)" *ngIf="!isLoading">
+  <form #form="ngForm" (submit)="createContract(form, $event)" *ngIf="!isLoading" [hidden]="submitted">
 
     <!-- title-->
     <div class="col-md-12">
@@ -39,7 +39,8 @@
                (focus)="getCustomers(searchedCustomer)"
                [ngModel]="customer"
                (ngModelChange)="customerOnChange($event)"
-               [matAutocomplete]="autoCustomer">
+               [matAutocomplete]="autoCustomer"
+               #customerRef="ngModel">
 
         <mat-autocomplete #autoCustomer="matAutocomplete" [displayWith]="customerCollectionDisplayFn">
 
@@ -51,6 +52,7 @@
             </mat-option>
           </ng-container>
         </mat-autocomplete>
+        <mat-error [hidden]="customerRef.valid">Customer is Required</mat-error>
       </mat-form-field>
     </div>
 
@@ -59,19 +61,19 @@
       <mat-form-field>
         <mat-label i18n="@@typeInput">Type</mat-label>
         <mat-select
-          #cType="ngModel"
           required
           name="typeId"
           [ngModel]="typesVal"
           (ngModelChange)="setContractType($event)"
-          #item="ngModel">
+          (openedChange)="loadContractTypesData()"
+          #typeRef="ngModel">
           <mat-option *ngIf="isLoadingTypes"><span [ngTemplateOutlet]="loading"></span></mat-option>
           <ng-container *ngIf="!isLoadingTypes">
             <mat-option>None</mat-option>
             <mat-option *ngFor="let item of contractTypeList" [value]="item">{{ item.name }}</mat-option>
           </ng-container>
         </mat-select>
-        <mat-error *ngIf="cType.hasError('required')">You must make a selection</mat-error>
+        <mat-error [hidden]="typeRef.valid">Type is Required</mat-error>
       </mat-form-field>
     </div>
 
@@ -113,17 +115,18 @@
     </div>
 
     <!--signed data-->
-    <div class="col-md-4">
+    <div class="col-md-3">
       <mat-form-field>
         <mat-label i18n="@@signedDate">Signed Date</mat-label>
-        <input matInput required name="'signedDate'" [(ngModel)]="contract.signedDate" [matDatepicker]="picker" [max]="maxDate">
+        <input matInput required name="'signedDate'" [(ngModel)]="contract.signedDate" [matDatepicker]="picker" [max]="maxDate" #signedDateRef="ngModel">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error [hidden]="signedDateRef.valid">Signed Date is Required</mat-error>
       </mat-form-field>
     </div>
 
     <!--End data-->
-    <div class="col-md-4" *ngIf="contract.temporary">
+    <div class="col-md-3" *ngIf="contract.temporary">
       <mat-form-field>
         <mat-label i18n="@@endDate">End Date</mat-label>
         <input matInput name="endDate" [(ngModel)]="contract.endDate" [matDatepicker]="picker" [min]="minDate">
@@ -250,8 +253,8 @@
     <!-- submit -->
     <div class="col-md-12">
       <div class="pull-right margin-top-medium">
-        <ng-container *ngIf="submitLoading" [ngTemplateOutlet]="loading"></ng-container>
-        <button mat-flat-button color="primary" i18n="@@submitButton" class="submit-button">Submit</button>
+        <ng-container *ngIf="submitted" [ngTemplateOutlet]="loading"></ng-container>
+        <button [disabled]="!form.form.valid" mat-flat-button color="primary" i18n="@@submitButton" class="submit-button">Submit</button>
       </div>
     </div>
 

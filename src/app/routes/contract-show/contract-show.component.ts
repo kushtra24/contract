@@ -75,7 +75,6 @@ export class ContractShowComponent implements OnInit {
         .subscribe( (contractDetails: Contract) => {
           this.isLoading = false;
           this.contract = contractDetails;
-          console.log('contract -> ', this.contract);
         }, err => {
           this.isLoading = false;
           throw err;

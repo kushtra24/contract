@@ -34,16 +34,22 @@
         <td mat-cell *matCellDef="let row"> {{ row.title }} </td>
       </ng-container>
 
-      <!-- Progress Column -->
-      <ng-container matColumnDef="endDate">
+      <!-- End Date Column -->
+      <ng-container matColumnDef="endDateConverted">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
-        <td mat-cell *matCellDef="let row"> {{ row.endDate }}</td>
+        <td mat-cell *matCellDef="let row"> {{ row.endDateConverted }}</td>
       </ng-container>
 
-      <!-- Color Column -->
-      <ng-container matColumnDef="customerId">
+      <!-- Signed date column-->
+      <ng-container matColumnDef="signedDateConverted">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Signed Date </th>
+        <td mat-cell *matCellDef="let row"> {{ row.signedDateConverted }}</td>
+      </ng-container>
+
+      <!-- customer Column -->
+      <ng-container matColumnDef="customerName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
-        <td mat-cell *matCellDef="let row" [style.color]="row.customerId"> {{row.customerId}} </td>
+        <td mat-cell *matCellDef="let row" > {{ row.customerName }} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

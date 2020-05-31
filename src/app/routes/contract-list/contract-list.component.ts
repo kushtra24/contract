@@ -16,7 +16,7 @@ import {ContractService} from '../../services/contract/contract.service';
 
 export class ContractListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'title', 'endDate', 'customerId'];
+  displayedColumns: string[] = ['id', 'title', 'endDateConverted', 'signedDateConverted', 'customerName'];
 
   dataSource: MatTableDataSource<Contract>;
 
@@ -48,6 +48,8 @@ export class ContractListComponent implements OnInit {
    */
   ngOnInit(): void {
 
+    this.subscribeToEvents();
+
     // if the contract list is empty then do not paginate
     if (this.contractList.length) {
       this.dataSource.paginator = this.paginator;
@@ -66,17 +68,15 @@ export class ContractListComponent implements OnInit {
     this.isLoading = false;
     // contract details page
     this.contractDetailBaseLink = '/contract/';
-    this.subscribeToEvents();
   }
 
   private subscribeToEvents() {
 
     this.isLoading = true;
-    this.contractService.getContracts()
+    this.contractService.getBackendContracts()
       .subscribe( (result: Contract[]) => {
         this.isLoading = false;
         this.contractList = result;
-        console.log('result', this.contractList);
 
         // Create 100 contractItems
         const contractItems = this.contractList;
@@ -86,6 +86,8 @@ export class ContractListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+
+    // this.contractService.
 
   }
 
@@ -106,7 +108,6 @@ export class ContractListComponent implements OnInit {
    * Go to the contract details page
    */
   onContractShow(contractId: number) {
-    console.log('id', contractId);
     // TODO: undo this comment
     if (!contractId || !this.router) { return; }
     this.router.navigate([this.contractDetailBaseLink + contractId]);

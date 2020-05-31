@@ -33,7 +33,6 @@ export class CreateContractComponent implements OnInit {
   @ViewChild('typeInput', {static: true})
 
   isLoading: boolean;
-  submitLoading: boolean;
   maxDate: Date;
   minDate: Date;
 
@@ -82,10 +81,11 @@ export class CreateContractComponent implements OnInit {
   hasBaseDropZoneOver: boolean;
   title: string;
   type: ContractType;
+  filename: string;
 
   // edit
   isEditMode: boolean;
-  filename: string;
+
 
 
   /**
@@ -113,7 +113,7 @@ export class CreateContractComponent implements OnInit {
    * Reset variable from constrictor
    */
   private reset() {
-    this.customer = {};
+    // this.customer = {};
 
     this.contract = {
       isOriginal: false,
@@ -124,8 +124,7 @@ export class CreateContractComponent implements OnInit {
       customerName: null
     };
 
-    this.typesVal = {};
-
+    // this.typesVal = {};
     this.projectIds = [];
     this.personId = [];
     this.linkedContracts = [];
@@ -138,8 +137,6 @@ export class CreateContractComponent implements OnInit {
     this.filename = 'NO-File';
     // page loading
     this.isLoading = false;
-    // loading on submit
-    this.submitLoading = false;
     // selected contract type
     this.contractTypeList = null;
     // loading on getting customers form selection
@@ -200,7 +197,7 @@ export class CreateContractComponent implements OnInit {
       .pipe(
         debounceTime(300),
         switchMap((searchString: string) => {
-          return this.contractService.loadCustomer(searchString);
+          return this.contractService.getCustomer(searchString);
         })
       )
       .subscribe(
@@ -225,7 +222,7 @@ export class CreateContractComponent implements OnInit {
   /**
    * load the contract types data
    */
-  private loadContractTypesData() {
+  loadContractTypesData() {
     this.isLoadingTypes = true;
     this.contractTypesService.loadTypes()
       .subscribe((data: ContractType[]) => {
@@ -250,7 +247,7 @@ export class CreateContractComponent implements OnInit {
     this.customerloading = true;
     const fillteredItem = search.split(' ');
 
-    this.contractService.loadCustomer(fillteredItem)
+    this.contractService.getCustomer(fillteredItem)
       .subscribe((customerResult: Customer[]) => {
           this.customerloading = false;
           this.customerList = customerResult;
@@ -288,7 +285,7 @@ export class CreateContractComponent implements OnInit {
     this.linkedIsOpen = true;
     this.linkedLoading = true;
 
-    this.contractService.getContracts()
+    this.contractService.getBackendContracts()
       .subscribe((rez: Contract[]) => {
         this.linkedLoading = false;
         this.linkedList = rez;
@@ -319,16 +316,23 @@ export class CreateContractComponent implements OnInit {
    * generate the contract title
    */
   generateTitle() {
-    console.log('customer name ->', this.customer.name);
 
-    // get all files in queue
-    for (const item of this.uploader.queue) {
-      this.filename = item?.file?.name;
+    // check if the queue has data
+    if (this.uploader.queue.length) {
+      // get all files in queue
+      for (const item of this.uploader.queue) {
+        this.filename = item?.file?.name;
+      }
+    } else if (this.fileData) {
+      // store the filename from the interface to the filename property
+      this.filename = this.fileData.filename;
     }
 
-    if (this.customer.name && this.type.name) {
-      this.title = this.customer.name + '-' + this.type.name + '-' + this.filename;
+    // check if customer name and contract type id exist
+    if (this.customer.name && this.contract.typeId) {
+      this.title = this.customer.name + '-' + this.contract.contractType + '-' + this.filename;
     }
+
     this.contract.title = this.title;
   }
 
@@ -368,7 +372,6 @@ export class CreateContractComponent implements OnInit {
           } else {
             this.router.navigate(['contracts/']);
           }
-          // this.router.navigate(['contracts/']);
         }, err => {
           this.submitted = false;
           throw err;
@@ -386,7 +389,6 @@ export class CreateContractComponent implements OnInit {
             this.submitted = false;
             throw err;
           });
-
     }
 
   }
@@ -463,8 +465,7 @@ export class CreateContractComponent implements OnInit {
   setContractType(value: any) {
     this.type = value;
     this.contract.typeId = value.id;
-    console.log('contract type ', this.contract.typeId);
-    console.log('contract type value -> ', value);
+    this.contract.contractType = value.name;
     this.generateTitle();
   }
 
@@ -483,9 +484,9 @@ export class CreateContractComponent implements OnInit {
         // full the contact interface
         this.contract = rez;
 
-        console.log('contract -> ', this.contract);
         // add value to customer input
         this.title = rez.title;
+        this.customer = {};
         this.customer.name = rez.customerName;
 
 
@@ -532,10 +533,9 @@ export class CreateContractComponent implements OnInit {
 
     this.isLoading = true;
     this.fileService.getDetails(id)
-      .subscribe( (date: File) => {
+      .subscribe( (data: File) => {
         this.isLoading = false;
-        this.fileData = date;
-        console.log('file data -> ', this.fileData);
+        this.fileData = data;
       }, err => {
         this.isLoading = false;
       });

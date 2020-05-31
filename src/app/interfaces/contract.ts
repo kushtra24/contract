@@ -3,11 +3,10 @@ export interface Contract {
   title?: string;
   typeId?: number;
   temporary?: boolean;
-<<<<<<< HEAD
   signedDate?: string;
-  signedDareConverted?: string;
+  signedDateConverted?: string;
   endDate?: string;
-  endDateConvert?: string;
+  endDateConverted?: string;
   isOriginal?: boolean;
   customerId?: number | string;
   projectId?: number[];
@@ -18,13 +17,4 @@ export interface Contract {
   projects?: any[];
   people?: any[];
   contractType?: string;
-=======
-  endDate?: string;
-  originalAtTeamAssistant?: boolean;
-  rating?: number;
-  ratingBg?: string;
-  submittingPersonId?: number;
-  singedDate?: string;
-  customerId?: number;
->>>>>>> 4348fe969dc5d14656fdd6aadf76522d855e84f2
 }
