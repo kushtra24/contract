@@ -1,0 +1,72 @@
+{
+  "APPBAR": {
+  "contract": "Verträge",
+  "create": "Erstellen",
+  "users": "Benutzer",
+  "me": "Ich",
+  "logout": "Ausloggen"
+},
+  "LOGIN": {
+    "login":"Einlogen",
+    "email":"E-Mail",
+    "password":"Passwort",
+    "asEmail":"Für e-Mail nutze: ",
+    "asPass":"Für passwort nutze:"
+  },
+  "HOME": {
+    "TITLE": "Vertragsmanagement-App",
+    "exampleApp": "Dies ist eine Beispiel-App eines Vertragsverwaltungssystems, das mit Angular erstellt wurde",
+    "navigate": "Um zur Vertragsliste zu navigieren, verwenden Sie die obigen Navigationsoptionen",
+    "thisAPP": "Dieses App hat ein Frontend mit Angular 9 und ein Backend mit Laravel 5.8"
+  },
+  "LIST": {
+    "title": "Vertragsliste",
+    "filter": "Filter",
+    "ListTitle": "Title",
+    "endDate": "ablaufdatum",
+    "signedDate": "Unterzeichnetes Datum",
+    "customer": "Kunde"
+  },
+  "CREATE": {
+    "createContract": "Create Contract",
+    "title": "Title",
+    "customers": "Customers",
+    "type": "Type",
+    "isOriginal": "is Original?",
+    "projects": "projects",
+    "hasExpirationDate": "has expiration date",
+    "signedDAte": "Signed date",
+    "additionalPeople": "Additional People",
+    "linkedContracts": "linked Contracts",
+    "baseDropZone": "Base Drop Zone",
+    "chooseFile": "Choose File",
+    "name": "Name",
+    "size": "Size",
+    "status": "Status",
+    "actions": "Actions",
+    "submit": "Submit"
+  },
+  "DETAILS": {
+    "title": "Title",
+    "edit": "Edit",
+    "name": "Name",
+    "type": "Type",
+    "date": "Date",
+    "customer": "Customer",
+    "original": "Original",
+    "projects": "Projects",
+    "linked": "Linked Contracts",
+    "additional": "Additional people",
+    "fileName": "File name",
+    "fileSize": "File Size",
+    "FileType": "File Type",
+    "download": "Download"
+  },
+  "Paginator": {
+    "Items per page:": "pro Seite:",
+    "Next page": "Nächste Seite",
+    "Previous page": "Vorherige Seite",
+    "First page": "Erste Seite",
+    "Last page": "Letzte Seite"
+  }
+}

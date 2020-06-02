@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +18,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import { CreateContractComponent } from './routes/create-contract/create-contract.component';
 import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -30,14 +30,22 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ContractShowComponent } from './routes/contract-show/contract-show.component';
 import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {RegisterComponent} from './components/register/register.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import { LoginComponent } from './routes/login/login.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import localeFr from '@angular/common/locales/de';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {MatPaginatorI18nService} from '../assets/i18n/PaginatorI18n';
+registerLocaleData(localeDe, 'de');
 
-registerLocaleData(localeDe, 'de-DE');
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
   declarations: [
@@ -79,13 +87,27 @@ registerLocaleData(localeDe, 'de-DE');
         FileUploadModule,
         MatCardModule,
         MatSnackBarModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
     ],
   exports: [
     MatAutocompleteModule,
     MatDatepickerModule,
     MatCheckboxModule,
   ],
-  providers: [MatDatepickerModule],
+  providers: [
+    MatDatepickerModule,
+    {provide: LOCALE_ID, useValue: 'de-DE' },
+    {
+      provide: MatPaginatorIntl,
+      useClass: MatPaginatorI18nService,
+    },
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

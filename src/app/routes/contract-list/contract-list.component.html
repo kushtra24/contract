@@ -9,13 +9,13 @@
 </div>
 
 <div class="col-lg-12 page-header">
-  <h1 i18n="@@contractList">Contract List</h1>
+  <h1>{{ "LIST.title" | translate }}</h1>
 </div>
 
 <div class="col-md-12">
 
   <mat-form-field>
-    <mat-label>Filter</mat-label>
+    <mat-label>{{ "LIST.filter" | translate}}</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="PO">
   </mat-form-field>
 
@@ -30,25 +30,25 @@
 
       <!-- title Column -->
       <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "LIST.title" | translate}} </th>
         <td mat-cell *matCellDef="let row"> {{ row.title }} </td>
       </ng-container>
 
       <!-- End Date Column -->
       <ng-container matColumnDef="endDateConverted">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "LIST.endDate" | translate }} </th>
         <td mat-cell *matCellDef="let row"> {{ row.endDateConverted }}</td>
       </ng-container>
 
       <!-- Signed date column-->
       <ng-container matColumnDef="signedDateConverted">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Signed Date </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "LIST.signedDate" | translate }} </th>
         <td mat-cell *matCellDef="let row"> {{ row.signedDateConverted }}</td>
       </ng-container>
 
       <!-- customer Column -->
       <ng-container matColumnDef="customerName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>  {{ "LIST.customer" | translate }} </th>
         <td mat-cell *matCellDef="let row" > {{ row.customerName }} </td>
       </ng-container>
 
@@ -56,7 +56,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onContractShow(row.id)" class="row-hover"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true"></mat-paginator>
 
   </div>
 

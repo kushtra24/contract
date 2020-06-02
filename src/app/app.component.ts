@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
 import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,12 @@ export class AppComponent {
   mode: ProgressSpinnerMode = 'indeterminate';
   value = 50;
 
-  constructor() { }
+  constructor(public translate: TranslateService) {
+    translate.addLangs(['de', 'en']);
+    // translate.setDefaultLang('de');
+
+    // const browserLang = translate.getBrowserLang();
+    // translate.use(browserLang.match(/de|en/) ? browserLang : 'de');
+  }
 
 }

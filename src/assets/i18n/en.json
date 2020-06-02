@@ -1,0 +1,76 @@
+{
+  "APPBAR": {
+    "contract": "Contract",
+    "create": "Create",
+    "users": "Users",
+    "me": "Me",
+    "logout": "Logout"
+  },
+  "lOGIN": {
+    "login":"Login",
+    "email":"Email",
+    "password":"Password",
+    "asEmail":"as email use",
+    "asPass":"as email use"
+  },
+  "HOME": {
+    "TITLE": "Contract management app",
+    "exampleApp": "This is an example app of a contract management system build with angular",
+    "navigate": "to navigate to the contract list use the navigation options above",
+    "thisAPP": "This app has a frontend with Angular 9  and a backend with Laravel 5.8"
+  },
+  "LIST": {
+    "title": "Contract List",
+    "filter": "Filter",
+    "ListTitle": "Title",
+    "endDate": "Expiry Date",
+    "signedDate": "Signed Date",
+    "customer": "Customer"
+  },
+  "CREATE": {
+    "createContract": "Create Contract",
+    "title": "Title",
+    "customers": "Customers",
+    "type": "Type",
+    "isOriginal": "is Original?",
+    "projects": "projects",
+    "hasExpirationDate": "has expiration date",
+    "signedDAte": "Signed date",
+    "additionalPeople": "Additional People",
+    "linkedContracts": "linked Contracts",
+    "baseDropZone": "Base Drop Zone",
+    "chooseFile": "Choose File",
+    "name": "Name",
+    "size": "Size",
+    "status": "Status",
+    "actions": "Actions",
+    "submit": "Submit"
+  },
+  "DETAILS": {
+    "title": "Title",
+    "edit": "Edit",
+    "name": "Name",
+    "type": "Type",
+    "date": "Date",
+    "customer": "Customer",
+    "original": "Original",
+    "projects": "Projects",
+    "linked": "Linked Contracts",
+    "additional": "Additional people",
+    "fileName": "File name",
+    "fileSize": "File Size",
+    "FileType": "File Type",
+    "download": "Download"
+  },
+  "EDIT": {
+    "title": "Edit Contract",
+    "Update": "Update"
+  },
+  "Paginator": {
+  "Items per page:": "Items per page:",
+  "Next page": "Next page",
+  "Previous page": "Previous page",
+  "First page": "First page",
+  "Last page": "Last page"
+  }
+}

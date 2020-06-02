@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-title>Login</mat-card-title>
+  <mat-card-title>{{ "LOGIN.login" | translate}}</mat-card-title>
   <mat-card-content>
     <form #loginForm='ngForm' (ngSubmit)="onSubmit()">
       <p>
@@ -7,8 +7,7 @@
           <input type="text"
                  matInput
                  required
-                 placeholder="Username"
-                 i18n-placeholder="@@username"
+                 placeholder="{{ 'LOGIN.email' | translate }}"
                  name="email" [(ngModel)]="form.email">
         </mat-form-field>
       </p>
@@ -18,20 +17,22 @@
           <input type="password"
                  matInput
                  required
-                 placeholder="Password"
+                 placeholder="{{ 'LOGIN.password' | translate }}"
                  i18n-placeholder="@@password"
                  name="password" [(ngModel)]="form.password">
         </mat-form-field>
       </p>
 
-<!--      <p *ngIf="error" class="error">-->
-<!--        {{ error }}-->
-<!--      </p>-->
 
       <div class="button">
-        <button type="submit" mat-button i18n="@@login" [disabled]="!loginForm.valid">Login</button>
+        <button type="submit" mat-button i18n="@@login" [disabled]="!loginForm.valid">{{ "lOGIN.login" | translate}}</button>
       </div>
 
     </form>
   </mat-card-content>
 </mat-card>
+
+  <mat-card>
+    <p>{{ "LOGIN.asEmail" | translate}} <span style="color: red">test@email.com</span></p>
+    <p>{{ "LOGIN.asPass" | translate}} <span style="color: red">pass</span></p>
+  </mat-card>

@@ -2,17 +2,25 @@
   <span class="margin-right-medium">Contract Management</span>
 
   <button mat-button [routerLink]="['/']"><mat-icon>house</mat-icon></button>
-  <button mat-button [matMenuTriggerFor]="menu">Contract</button>
+  <button mat-button [matMenuTriggerFor]="menu">{{ "APPBAR.contract" | translate }}</button>
   <mat-menu #menu="matMenu">
-    <button [routerLink]="['/contracts']" mat-menu-item>Contracts</button>
-    <button mat-menu-item [routerLink]="['/contracts/create']">Create</button>
+    <button [routerLink]="['/contracts']" mat-menu-item>{{ "APPBAR.contract" | translate }}</button>
+    <button mat-menu-item [routerLink]="['/contracts/create']">{{ "APPBAR.create" | translate }}</button>
   </mat-menu>
-  <button mat-button>Users</button>
+  <button mat-button>{{ "APPBAR.users" | translate}}</button>
 
   <span class="Align-everything-left"></span>
+    <div class="margin-right-medium">
+      <label for="lang">
+        <select #langSelect (change)="translate.use(langSelect.value)" id="lang">
+        <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+      </select>
+      </label>
+    </div>
+
   <mat-icon class="user-icon" aria-hidden="false" aria-label="User icon" mat-button [matMenuTriggerFor]="userMenu">face</mat-icon>
   <mat-menu #userMenu="matMenu">
-    <button mat-menu-item [routerLink]="['/user']">Me</button>
-    <button mat-menu-item (click)="logout($event)">Logout</button>
+    <button mat-menu-item [routerLink]="['/user']">{{"APPBAR.me" | translate }}</button>
+    <button mat-menu-item (click)="logout($event)">{{ "APPBAR.logout" | translate }}</button>
   </mat-menu>
 </mat-toolbar>

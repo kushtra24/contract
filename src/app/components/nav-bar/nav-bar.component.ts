@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
 import {Router} from '@angular/router';
 import {TokenService} from '../../services/token/token.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,8 +16,13 @@ export class NavBarComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private token: TokenService
-  ) { this.reset(); }
+    private token: TokenService,
+    public translate: TranslateService
+  ) {
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|de/) ? browserLang : 'de');
+    this.reset();
+  }
 
   private reset() {
     this.loggedIn = false;
