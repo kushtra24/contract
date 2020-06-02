@@ -9,7 +9,7 @@
 </div>
 
 <div class="container page-header">
-  <h1 *ngIf="contract.id; else create" i18n="@@createContract">Edit Contract</h1>
+  <h1 *ngIf="contract.id; else create">{{ "CREATE.editContract" | translate }}</h1>
 </div>
 
 <div class="container" *ngIf="!isLoading">
@@ -17,11 +17,11 @@
 
     <!-- title-->
     <div class="col-md-12">
-      <h4 i18n="@@title">Title:
+      <h4>{{ "CREATE.title" | translate }}
         <span>{{ title }}</span>
         <sup *ngIf="!title" class="disabledText">
           <i class="fas fa-info-circle"></i>
-          Title will be generated while filling the form
+          {{ "CREATE.willBeGenerated" | translate }}
         </sup>
       </h4>
     </div>
@@ -30,7 +30,7 @@
     <div class="col-md-6">
       <mat-form-field class="example-full-width">
         <input type="text"
-               placeholder="Customers"
+               placeholder="{{ 'CREATE.customers' | translate }}"
                i18n-placeholder="customerInput"
                aria-label="customers"
                matInput
@@ -52,14 +52,14 @@
             </mat-option>
           </ng-container>
         </mat-autocomplete>
-        <mat-error [hidden]="customerRef.valid">Customer is Required</mat-error>
+        <mat-error [hidden]="customerRef.valid">{{ "CREATE.customersIsRequired" | translate }}</mat-error>
       </mat-form-field>
     </div>
 
     <!--type-->
     <div class="col-md-4">
       <mat-form-field>
-        <mat-label i18n="@@typeInput">Type</mat-label>
+        <mat-label>{{ "CREATE.type" | translate }}</mat-label>
         <mat-select
           required
           name="typeId"
@@ -73,13 +73,13 @@
             <mat-option *ngFor="let item of contractTypeList" [value]="item">{{ item.name }}</mat-option>
           </ng-container>
         </mat-select>
-        <mat-error [hidden]="typeRef.valid">Type is Required</mat-error>
+        <mat-error [hidden]="typeRef.valid">{{ "CREATE.typeIsRequired" | translate }}</mat-error>
       </mat-form-field>
     </div>
 
     <!--is original checkbox-->
     <div class="col-md-2 isOriginal-margin-top">
-      <mat-checkbox [(ngModel)]="contract.isOriginal" name="isOriginal" i18n="@@isOriginal"> is original?</mat-checkbox>
+      <mat-checkbox [(ngModel)]="contract.isOriginal" name="isOriginal">{{ "CREATE.isOriginal" | translate }}</mat-checkbox>
     </div>
 
     <!--projects-->
@@ -94,7 +94,7 @@
 
         <mat-select
                     multiple
-                    placeholder="Projects"
+                    placeholder="{{ 'CREATE.projects' | translate }}"
                     i18n-placeholder="@@projectsInput"
                     (openedChange)="getProjects()"
                     [(ngModel)]="projectIds"
@@ -110,25 +110,25 @@
 
     <!-- expiration date checkbox-->
     <div class="col-md-12">
-      <mat-checkbox [(ngModel)]="contract.temporary" name="temporary" i18n="@@hasExpirationDate">has expiration date
+      <mat-checkbox [(ngModel)]="contract.temporary" name="temporary">{{ 'CREATE.hasExpirationDate' | translate }}
       </mat-checkbox>
     </div>
 
     <!--signed data-->
     <div class="col-md-3">
       <mat-form-field>
-        <mat-label i18n="@@signedDate">Signed Date</mat-label>
+        <mat-label>{{ 'CREATE.signedDate' | translate }}</mat-label>
         <input matInput required name="'signedDate'" [(ngModel)]="contract.signedDate" [matDatepicker]="picker" [max]="maxDate" #signedDateRef="ngModel">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        <mat-error [hidden]="signedDateRef.valid">Signed Date is Required</mat-error>
+        <mat-error [hidden]="signedDateRef.valid">{{ 'CREATE.signedDateRequired' | translate }}</mat-error>
       </mat-form-field>
     </div>
 
     <!--End data-->
     <div class="col-md-3" *ngIf="contract.temporary">
       <mat-form-field>
-        <mat-label i18n="@@endDate">End Date</mat-label>
+        <mat-label>{{ 'LIST.endDate' | translate }}</mat-label>
         <input matInput name="endDate" [(ngModel)]="contract.endDate" [matDatepicker]="picker" [min]="minDate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
@@ -140,13 +140,13 @@
       <mat-form-field [floatLabel]="peopleLoading ? 'never' : 'auto'">
         <mat-label *ngIf="peopleLoading">
           <div class="select-placeholder-container">
-            <span>Loading...</span>
+            <span>{{ 'CREATE.loading' | translate }}</span>
             <mat-spinner class="spinner" diameter="20"></mat-spinner>
           </div>
         </mat-label>
 
         <mat-select multiple
-                    placeholder="Additional people"
+                    placeholder="{{ 'CREATE.additionalPeople' | translate }}"
                     i18n-placeholder="@@additionalPeople"
                     [(ngModel)]="personId"
                     name="personId"
@@ -167,13 +167,13 @@
 
         <mat-label *ngIf="linkedLoading">
           <div class="select-placeholder-container">
-            <span>Loading...</span>
+            <span>{{ 'CREATE.loading' | translate }}</span>
             <mat-spinner class="spinner" diameter="20"></mat-spinner>
           </div>
         </mat-label>
 
         <mat-select multiple
-                    placeholder=" Linked Contracts"
+                    placeholder="{{ 'CREATE.linkedContracts' | translate }}"
                     i18n-placeholder="@@linkedContracts"
                     (openedChange)="getContracts()"
                     [(ngModel)]="linkedContracts"
@@ -194,13 +194,13 @@
            (fileOver)="fileOverBase($event)"
            [uploader]="uploader"
            class="well my-drop-zone col-md-10"
-           i18n="@@baseDropZone">
-        Base drop zone
+      >
+        {{ 'CREATE.baseDropZone' | translate }}
       </div>
 
       <!-- Single -->
       <div class="col-md-2 padding-right-none">
-        <label for="file" class="btn btn-default display-block" i18n="@chooseFile">Choose File</label>
+        <label for="file" class="btn btn-default display-block">{{ 'CREATE.chooseFile' | translate }}</label>
         <input id="file" class="hidden" type="file" ng2FileSelect (onFileSelected)="generateTitle()" [uploader]="uploader" [accept]="['.pdf']" />
       </div>
     </div>
@@ -213,10 +213,10 @@
       <table class="table">
         <thead>
         <tr>
-          <th width="50%">Name</th>
-          <th>Size</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th width="50%">{{ 'CREATE.name' | translate }}</th>
+          <th>{{ 'CREATE.size' | translate }}</th>
+          <th>{{ 'CREATE.status' | translate }}</th>
+          <th>{{ 'CREATE.actions' | translate }}</th>
           <th></th>
         </tr>
         </thead>
@@ -242,7 +242,7 @@
           <td nowrap>
             <button type="button" class="btn btn-danger btn-xs"
                     (click)="item.remove()">
-              <span class="glyphicon glyphicon-trash"></span> Remove
+              <span class="glyphicon glyphicon-trash"></span> {{ 'CREATE.remove' | translate }}
             </button>
           </td>
         </tr>
@@ -254,7 +254,7 @@
     <div class="col-md-12">
       <div class="pull-right margin-top-medium">
         <ng-container *ngIf="submitted" [ngTemplateOutlet]="loading"></ng-container>
-        <button [disabled]="!form.form.valid" mat-flat-button color="primary" i18n="@@submitButton" class="submit-button">Submit</button>
+        <button [disabled]="!form.form.valid" mat-flat-button color="primary" class="submit-button">{{ 'CREATE.submit' | translate }}</button>
       </div>
     </div>
 
@@ -262,7 +262,7 @@
 </div>
 
 <ng-template #create>
-  <h1 i18n="@@createContract">Create Contract</h1>
+  <h1>{{ "CREATE.createContract" | translate }}</h1>
 </ng-template>
 
 <ng-template #loading>

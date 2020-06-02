@@ -60,6 +60,7 @@ export class ContractShowComponent implements OnInit {
           this.isLoading = false;
           throw err;
         });
+
   }
 
 

@@ -29,13 +29,17 @@
   },
   "CREATE": {
     "createContract": "Create Contract",
-    "title": "Title",
+    "editContract": "Edit Contract",
+    "willBeGenerated": "Title will be generated while filling the form",
+    "title": "Title:",
     "customers": "Customers",
+    "customersIsRequired": "Customer is Required",
     "type": "Type",
-    "isOriginal": "is Original?",
+    "isOriginal": "Original",
     "projects": "projects",
-    "hasExpirationDate": "has expiration date",
-    "signedDAte": "Signed date",
+    "hasExpirationDate": "expiration date",
+    "signedDate": "Signed date",
+    "signedDateRequired": "Signed date is required",
     "additionalPeople": "Additional People",
     "linkedContracts": "linked Contracts",
     "baseDropZone": "Base Drop Zone",
@@ -44,12 +48,15 @@
     "size": "Size",
     "status": "Status",
     "actions": "Actions",
-    "submit": "Submit"
+    "submit": "Submit",
+    "remove": "enfernen",
+    "loading": "Läd"
   },
   "DETAILS": {
-    "title": "Title",
+    "title": "Contract Details",
     "edit": "Edit",
     "name": "Name",
+    "number": "Number",
     "type": "Type",
     "date": "Date",
     "customer": "Customer",
@@ -66,11 +73,14 @@
     "title": "Edit Contract",
     "Update": "Update"
   },
-  "Paginator": {
+  "PAGINATOR": {
   "Items per page:": "Items per page:",
   "Next page": "Next page",
   "Previous page": "Previous page",
   "First page": "First page",
   "Last page": "Last page"
+  },
+  "USER": {
+    "user": "User"
   }
 }

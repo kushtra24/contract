@@ -1,13 +1,12 @@
-
 import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 
-const ITEMS_PER_PAGE = 'Paginator.Items per page:';
-const NEXT_PAGE = 'Paginator.Next page';
-const PREV_PAGE = 'Paginator.Previous page';
-const FIRST_PAGE = 'Paginator.First page';
-const LAST_PAGE = 'Paginator.Last page';
+const ITEMS_PER_PAGE = 'PAGINATOR.Items per page:';
+const NEXT_PAGE = 'PAGINATOR.Next page';
+const PREV_PAGE = 'PAGINATOR.Previous page';
+const FIRST_PAGE = 'PAGINATOR.First page';
+const LAST_PAGE = 'PAGINATOR.Last page';
 
 @Injectable()
 export class MatPaginatorI18nService extends MatPaginatorIntl {

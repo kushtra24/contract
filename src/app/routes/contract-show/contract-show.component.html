@@ -11,9 +11,9 @@
 <div class="container" *ngIf="!isLoading">
   <div class="card">
     <div class="page-header">
-      <h1>Contract Details
+      <h1>{{ "DETAILS.title" | translate }}
         <button class="pull-right" mat-raised-button color="basic" aria-label="download contract" (click)="navigateToRoute(contract.id)">
-        Edit
+          {{"DETAILS.edit" | translate }}
           <i class="fas fa-edit"></i>
         </button>
       </h1>
@@ -22,17 +22,17 @@
       <div class="row">
 
         <div class="col-md-8">
-          <p><b>Name: </b> {{ contract?.title }}</p>
+          <p><b>{{"DETAILS.name" | translate }}: </b> {{ contract?.title }}</p>
           <br>
-          <p><b>Number: </b> {{ contract?.id}}</p>
+          <p><b>{{"DETAILS.number" | translate }}: </b> {{ contract?.id}}</p>
           <br>
-          <p><b>Type: </b> {{ contract?.contractType }}</p>
+          <p><b>{{"DETAILS.type" | translate }}: </b> {{ contract?.contractType }}</p>
           <br>
-          <p><b>Date:</b> {{ contract?.signedDateConverted }} - {{ contract?.endDateConverted }}</p>
+          <p><b>{{"DETAILS.date" | translate }}:</b> {{ contract?.signedDateConverted }} - {{ contract?.endDateConverted }}</p>
           <br>
-          <p><b>Customer:</b> {{contract?.customerName }}</p>
+          <p><b>{{"DETAILS.customer" | translate }}:</b> {{contract?.customerName }}</p>
           <br>
-          <p><b>Original: </b> {{ contract?.isOriginal ? 'Yes' : 'No' }}</p>
+          <p><b>{{"DETAILS.original" | translate }}: </b> {{ contract?.isOriginal ? 'Yes' : 'No' }}</p>
         </div>
 
         <div class="col-md-4">
@@ -42,14 +42,14 @@
                 <i class="fas fa-file-alt fa-7x"></i>
               </div>
               <div class="col-md-7">
-                <p><b>File Name: </b> {{ fileDetails?.filename }}</p>
-                <p><b>File Size: </b> {{ fileDetails?.size/1024/1024 | number:'.2' }} MB</p>
-                <p><b>File Type: </b> {{ fileDetails?.mime }}</p>
+                <p><b>{{"DETAILS.fileName" | translate }}: </b> {{ fileDetails?.filename }}</p>
+                <p><b>{{"DETAILS.fileSize" | translate }}: </b> {{ fileDetails?.size/1024/1024 | number:'.2' }} MB</p>
+                <p><b>{{"DETAILS.type" | translate }}: </b> {{ fileDetails?.mime }}</p>
               </div>
 
               <a mat-raised-button color="primary" aria-label="download contract" target="_blank"
                  [href]=" env + 'api/files/' + contract?.id + '/download?token=' + userToken ">
-                Download
+                {{"DETAILS.download" | translate }}
                 <i class="fas fa-file-download"></i>
               </a>
 
@@ -59,19 +59,19 @@
         <div class="col-md-12 padding-top-small">
           <div class="row">
             <div class="col-md-4">
-              <p><b>Projects:</b></p>
+              <p><b>{{"DETAILS.projects" | translate }}:</b></p>
               <span *ngFor="let project of contract.projects">
             <p>{{ project.title }}</p>
           </span>
             </div>
             <div class="col-md-4">
-              <p><b>Linked Contracts:</b></p>
+              <p><b>{{"DETAILS.linked" | translate }}:</b></p>
               <span *ngFor="let linked of contract.linkedContracts">
             <p> {{ linked.title }}</p>
           </span>
             </div>
             <div class="col-md-4">
-              <p><b>Additional People:</b></p>
+              <p><b>{{"DETAILS.additional" | translate }}:</b></p>
               <span *ngFor="let person of contract.people">
             <p> {{ person.firstName }} {{ person.lastName }}</p>
           </span>
