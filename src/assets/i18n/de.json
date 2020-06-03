@@ -78,6 +78,7 @@
     "Last page": "Letzte Seite"
   },
   "USER": {
-  "title": "Benutzer"
+  "title": "Benutzer",
+  "users": "Benutzer"
   }
 }

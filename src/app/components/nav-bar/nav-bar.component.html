@@ -7,7 +7,7 @@
     <button [routerLink]="['/contracts']" mat-menu-item>{{ "APPBAR.contract" | translate }}</button>
     <button mat-menu-item [routerLink]="['/contracts/create']">{{ "APPBAR.create" | translate }}</button>
   </mat-menu>
-  <button mat-button>{{ "APPBAR.users" | translate}}</button>
+  <button mat-button [routerLink]="['/users']">{{ "APPBAR.users" | translate}}</button>
 
   <span class="Align-everything-left"></span>
     <div class="margin-right-medium">

@@ -1,7 +1,6 @@
 export interface User {
-  name: string;
-  account: {
-    email: string;
-    confirm: string;
-  }
+  name?: string;
+  email?: string;
+  confirm?: string;
+  email_verified_at?: string;
 }

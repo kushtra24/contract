@@ -1,51 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
 import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
-import {UserService} from '../../services/user/user.service';
 import {User} from '../../interfaces/User';
+import {UserService} from '../../services/user/user.service';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-users-list',
+  templateUrl: './users-list.component.html',
+  styleUrls: ['./users-list.component.css']
 })
-export class UserComponent implements OnInit {
+export class UsersListComponent implements OnInit {
 
   isLoading: boolean;
   // loading spinner
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'indeterminate';
   value = 50;
-  user: User;
+  users: User;
 
-  constructor(private userService: UserService) {
+  constructor( private userService: UserService) {
     this.reset();
   }
 
+  private reset() {}
+
   ngOnInit(): void {
-    this.subscribeToEvents();
+  this.subscribeToEvents();
   }
-
-  /**
-   * reset
-   */
-  private reset() {
-
-  }
-
 
   private subscribeToEvents() {
 
     this.isLoading = true;
-    this.userService.getUser()
-      .subscribe( (data: User) => {
+    this.userService.getAllUsers()
+      .subscribe( ( data: User) => {
         this.isLoading = false;
-        this.user = data;
-        console.log('userdata => ', this.user);
-        }, err => {
+        this.users = data;
+        console.log('---> ', this.users);
+      }, err => {
         this.isLoading = false;
         throw err;
       });
-      }
+  }
 
 }

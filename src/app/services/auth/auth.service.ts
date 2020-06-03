@@ -45,8 +45,10 @@ export class AuthService {
    */
   login(loginForm) {
     return this.http.post(this.env + 'api/login', loginForm)
-      .subscribe(data => this.handleResponse(data),
-                error => this.handleError(error)
+      .subscribe(data => {
+        this.handleResponse(data);
+        },
+          error => this.handleError(error)
       );
   }
 

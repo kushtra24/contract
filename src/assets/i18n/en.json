@@ -6,12 +6,12 @@
     "me": "Me",
     "logout": "Logout"
   },
-  "lOGIN": {
-    "login":"Login",
-    "email":"Email",
+  "LOGIN": {
+    "login": "Login",
+    "email": "Email",
     "password":"Password",
-    "asEmail":"as email use",
-    "asPass":"as email use"
+    "asEmail":" as email use",
+    "asPass": "as email use"
   },
   "HOME": {
     "TITLE": "Contract management app",
@@ -81,6 +81,7 @@
   "Last page": "Last page"
   },
   "USER": {
-    "user": "User"
+    "title": "User",
+    "users": "Users"
   }
 }

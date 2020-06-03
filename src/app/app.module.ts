@@ -40,6 +40,7 @@ import localeFr from '@angular/common/locales/de';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {MatPaginatorI18nService} from '../assets/i18n/PaginatorI18n';
+import { UsersListComponent } from './routes/users-list/users-list.component';
 registerLocaleData(localeDe, 'de');
 
 // AoT requires an exported function for factories
@@ -58,6 +59,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ContractShowComponent,
     RegisterComponent,
     LoginComponent,
+    UsersListComponent,
   ],
     imports: [
         BrowserModule,
