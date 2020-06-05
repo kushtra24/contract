@@ -61,20 +61,20 @@
             <div class="col-md-4">
               <p><b>{{"DETAILS.projects" | translate }}:</b></p>
               <span *ngFor="let project of contract.projects">
-            <p>{{ project.title }}</p>
-          </span>
+                <p>{{ project.title }}</p>
+              </span>
             </div>
             <div class="col-md-4">
               <p><b>{{"DETAILS.linked" | translate }}:</b></p>
               <span *ngFor="let linked of contract.linkedContracts">
-            <p> {{ linked.title }}</p>
-          </span>
+                <p> {{ linked.title }}</p>
+              </span>
             </div>
             <div class="col-md-4">
               <p><b>{{"DETAILS.additional" | translate }}:</b></p>
               <span *ngFor="let person of contract.people">
-            <p> {{ person.firstName }} {{ person.lastName }}</p>
-          </span>
+                <p> {{ person.firstName }} {{ person.lastName }}</p>
+              </span>
             </div>
           </div>
         </div>

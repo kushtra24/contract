@@ -36,6 +36,7 @@ export class ContractShowComponent implements OnInit {
   }
 
   private reset() {
+    this.contract = {};
     this.fileDetails = {};
     this.userToken = this.auth.getAuthToken();
   }

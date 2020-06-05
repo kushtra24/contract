@@ -114,6 +114,7 @@ export class CreateContractComponent implements OnInit {
    */
   private reset() {
     // this.customer = {};
+    this.typesVal = {};
 
     this.contract = {
       isOriginal: false,
@@ -484,44 +485,58 @@ export class CreateContractComponent implements OnInit {
         // full the contact interface
         this.contract = rez;
 
-        // add value to customer input
-        this.title = rez.title;
-        this.customer = {};
-        this.customer.name = rez.customerName;
-
-
-        // contract type value input
-        this.typesVal = this.contractTypeList.find(x => x.id === rez.typeId);
-        // this.peopleName = this.contractInterface.projects['title'];
-
-        // project filling the input form with data
-        this.getProjects();
-        if (this.contract.projects != null) {
-          for (const project of this.contract.projects) {
-            this.projectIds.push(project.id);
-          }
-        }
-
-        // additional people filling the input with data
-        this.getAdditionalPeople();
-        if (this.contract.people != null) {
-          for (const people of this.contract.people) {
-            this.personId.push(people.id);
-            this.contract.personId = people;
-          }
-        }
-
-        // linked contract filling the input with data
-        this.getContracts();
-        if (this.contract.linkedContracts != null) {
-          for (const contract of this.contract.linkedContracts) {
-            this.linkedContracts.push(contract.id);
-          }
-        }
+        this.addDataToEditForm(rez);
       }, err => {
         this.isLoading = false;
         throw err;
       });
+  }
+
+
+  addDataToEditForm(rez) {
+
+    // add value to customer input
+    this.title = rez.title;
+    this.customer = {};
+    this.customer.name = rez.customerName;
+
+    console.log(' contract-----> ',  rez);
+    console.log(' contract-----> ',  rez.typeId);
+    console.log('1-----> ',  this.contract.typeId);
+    console.log('type list -----> ',  this.contractTypeList);
+    // contract type value input
+    this.typesVal = this.contractTypeList.find(obj => {
+      return obj.id == rez.typeId;
+    });
+
+    // this.typesVal = this.contractTypeList.find(x => x.id === rez.typeId);
+    // this.peopleName = this.contractInterface.projects['title'];
+    console.log('tpesVal-----> ',  this.typesVal);
+    // project filling the input form with data
+
+    this.getProjects();
+    if (this.contract.projects != null) {
+      for (const project of this.contract.projects) {
+        this.projectIds.push(project.id);
+      }
+    }
+
+    // additional people filling the input with data
+    this.getAdditionalPeople();
+    if (this.contract.people != null) {
+      for (const people of this.contract.people) {
+        this.personId.push(people.id);
+        this.contract.personId = people;
+      }
+    }
+
+    // linked contract filling the input with data
+    this.getContracts();
+    if (this.contract.linkedContracts != null) {
+      for (const contract of this.contract.linkedContracts) {
+        this.linkedContracts.push(contract.id);
+      }
+    }
   }
 
   /**
